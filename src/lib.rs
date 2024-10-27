@@ -16,7 +16,6 @@ pub struct E57 {
     pub intensity: Py<PyArray<f32, Ix2>>,
 }
 
-/// Extracts the xml contents from an e57 file.
 #[pyfunction]
 fn raw_xml(filepath: &str) -> PyResult<String> {
     let file = File::open(filepath)?;
@@ -34,7 +33,6 @@ fn raw_xml(filepath: &str) -> PyResult<String> {
     Ok(xml_string)
 }
 
-/// Extracts the point data from an e57 file.
 #[pyfunction]
 unsafe fn read_points(py: Python<'_>, filepath: &str) -> PyResult<E57> {
     let file = E57Reader::from_file(filepath);
@@ -105,7 +103,6 @@ unsafe fn read_points(py: Python<'_>, filepath: &str) -> PyResult<E57> {
     Ok(e57)
 }
 
-/// e57 pointcloud file reading.
 #[pymodule]
 fn e57(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<E57>()?;
